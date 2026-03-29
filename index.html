@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
 
-  <!-- Faz o layout se adaptar bem ao celular -->
+  <!-- Ajusta a tela para celular -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Cor do tema do navegador no celular -->
+  <!-- Cor do navegador no celular -->
   <meta name="theme-color" content="#2f6fed" />
 
-  <title>Lista de Compras PWA</title>
+  <title>Lista de Compras PWA V2</title>
 
-  <!-- Arquivo de estilos -->
+  <!-- Estilo do app -->
   <link rel="stylesheet" href="visual.css" />
 
   <!-- Manifesto do PWA -->
@@ -19,57 +19,76 @@
 </head>
 <body>
 
-  <!-- Estrutura principal do aplicativo -->
   <div class="app">
 
-    <!-- Cabeçalho do app -->
+    <!-- CABEÇALHO -->
     <header class="topo">
-      <h1>🛒 Lista de Compras</h1>
-      <p>Marque os itens já comprados.</p>
+      <h1>🛒 Lista de Compras V2</h1>
+      <p>Controle itens, preços e total da feira.</p>
     </header>
 
-    <!-- Área principal -->
-    <main>
+    <!-- FORMULÁRIO PARA ADICIONAR NOVO ITEM -->
+    <section class="formulario">
+      <h2>Adicionar item</h2>
 
-      <!-- Painel de resumo -->
-      <section class="painel">
-        <div class="resumo">
+      <div class="grupo-form">
+        <input type="text" id="input-nome" placeholder="Nome do item" />
+      </div>
 
-          <!-- Card com total de itens -->
-          <div class="card-resumo">
-            <span>Total</span>
-            <strong id="total-itens">0</strong>
-          </div>
+      <div class="linha-form">
+        <input type="number" id="input-quantidade" placeholder="Qtd" min="1" step="1" />
+        <input type="text" id="input-unidade" placeholder="Unidade (kg, pct, un...)" />
+      </div>
 
-          <!-- Card com total de itens comprados -->
-          <div class="card-resumo">
-            <span>Comprados</span>
-            <strong id="itens-comprados">0</strong>
-          </div>
+      <div class="linha-form">
+        <input type="number" id="input-preco" placeholder="Preço unitário" min="0" step="0.01" />
+        <button id="btn-adicionar" class="btn">Adicionar</button>
+      </div>
+    </section>
 
-          <!-- Card com total de itens que ainda faltam -->
-          <div class="card-resumo">
-            <span>Faltando</span>
-            <strong id="itens-faltando">0</strong>
-          </div>
+    <!-- RESUMO -->
+    <section class="painel">
+      <div class="resumo">
+        <div class="card-resumo">
+          <span>Total de itens</span>
+          <strong id="total-itens">0</strong>
         </div>
 
-        <!-- Área dos botões de ação -->
-        <div class="acoes">
-          <button id="btn-marcar-todos" class="btn">Marcar todos</button>
-          <button id="btn-desmarcar-todos" class="btn btn-secundario">Limpar checks</button>
+        <div class="card-resumo">
+          <span>Comprados</span>
+          <strong id="itens-comprados">0</strong>
         </div>
-      </section>
 
-      <!-- Área onde a lista será montada pelo JavaScript -->
-      <section class="lista-container">
-        <ul id="lista-compras" class="lista-compras"></ul>
-      </section>
+        <div class="card-resumo">
+          <span>Total da compra</span>
+          <strong id="valor-total">R$ 0,00</strong>
+        </div>
+      </div>
 
-    </main>
+      <div class="acoes">
+        <button id="btn-marcar-todos" class="btn">Marcar todos</button>
+        <button id="btn-desmarcar-todos" class="btn btn-secundario">Limpar checks</button>
+        <button id="btn-limpar-lista" class="btn btn-perigo">Apagar lista</button>
+      </div>
+    </section>
+
+    <!-- LISTA -->
+    <section class="lista-container">
+      <h2>Sua lista</h2>
+      <ul id="lista-compras" class="lista-compras"></ul>
+    </section>
+
+    <!-- HISTÓRICO DE PREÇOS -->
+    <section class="historico-container">
+      <h2>Histórico de preços</h2>
+      <p class="texto-ajuda">
+        O histórico guarda o último preço informado para você comparar de uma feira para outra.
+      </p>
+      <div id="historico-precos" class="historico-precos"></div>
+    </section>
+
   </div>
 
-  <!-- Arquivo JavaScript principal -->
   <script src="app.js"></script>
 </body>
 </html>
