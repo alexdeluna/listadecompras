@@ -1,103 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
 
-  <!-- Ajusta a tela para celular -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Cor do navegador no celular -->
-  <meta name="theme-color" content="#2f6fed" />
+<title>Feira Fácil</title>
 
-  <title>Lista de Compras PWA V2</title>
+<link rel="stylesheet" href="visual.css">
+<link rel="manifest" href="manifest.json">
 
-  <!-- Estilo do app -->
-  <link rel="stylesheet" href="visual.css" />
+<meta name="theme-color" content="#2f6fed">
 
-  <!-- Manifesto do PWA -->
-  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <!-- CABEÇALHO -->
-    <header class="topo">
-      <h1>🛒 Lista de Compras V2</h1>
-      <p>Controle itens, preços e total da feira.</p>
-    </header>
+<header class="topo">
+<h1>🛒 Feira Fácil</h1>
+<p>Controle sua feira e compare preços.</p>
+</header>
 
-    <!-- FORMULÁRIO PARA ADICIONAR NOVO ITEM -->
-    <section class="formulario">
-      <h2>Adicionar item</h2>
+<nav class="menu">
 
-      <div class="grupo-form">
-        <input type="text" id="input-nome" placeholder="Nome do item" />
-      </div>
+<button onclick="mostrarTela('lista')" class="aba ativa">Lista</button>
+<button onclick="mostrarTela('feira')" class="aba">Feira</button>
+<button onclick="mostrarTela('comparacao')" class="aba">Comparação</button>
 
-      <div class="linha-form">
-        <input type="number" id="input-quantidade" placeholder="Qtd" min="1" step="1" />
-        <input type="text" id="input-unidade" placeholder="Unidade (kg, pct, un...)" />
-      </div>
+</nav>
 
-      <div class="linha-form">
-        <input type="number" id="input-preco" placeholder="Preço unitário" min="0" step="0.01" />
-        <button id="btn-adicionar" class="btn">Adicionar</button>
-      </div>
-    </section>
+<!-- TELA LISTA -->
 
-    <!-- RESUMO -->
-    <section class="painel">
-      <div class="resumo">
-        <div class="card-resumo">
-          <span>Total de itens</span>
-          <strong id="total-itens">0</strong>
-        </div>
+<section id="lista" class="tela ativa">
 
-        <div class="card-resumo">
-          <span>Comprados</span>
-          <strong id="itens-comprados">0</strong>
-        </div>
+<div class="card">
 
-        <div class="card-resumo">
-          <span>Total da compra</span>
-          <strong id="valor-total">R$ 0,00</strong>
-        </div>
-      </div>
+<h2>Adicionar item</h2>
 
-      <div class="acoes">
-        <button id="btn-marcar-todos" class="btn">Marcar todos</button>
-        <button id="btn-desmarcar-todos" class="btn btn-secundario">Limpar checks</button>
-        <button id="btn-limpar-lista" class="btn btn-perigo">Apagar lista</button>
-      </div>
-    </section>
+<input id="nomeItem" placeholder="Nome do item">
 
-    <!-- LISTA -->
-    <section class="lista-container">
-      <h2>Sua lista</h2>
-      <ul id="lista-compras" class="lista-compras"></ul>
-    </section>
+<input id="qtdItem" type="number" placeholder="Quantidade">
 
-    <!-- HISTÓRICO DE PREÇOS -->
-    <section class="historico-container">
-  <div class="historico-topo">
-    <div>
-      <h2>Histórico de preços</h2>
-      <p class="texto-ajuda">
-        O histórico guarda o último preço informado para você comparar de uma feira para outra.
-      </p>
-    </div>
+<button onclick="adicionarItem()" class="btn">Adicionar</button>
 
-    <button id="btn-limpar-historico" class="btn btn-perigo">
-      Apagar histórico
-    </button>
-  </div>
+<button onclick="restaurarUltimaLista()" class="btn-sec">Restaurar última lista</button>
 
-  <div id="historico-precos" class="historico-precos"></div>
+</div>
+
+<ul id="listaCadastro"></ul>
+
 </section>
 
-  </div>
+<!-- TELA FEIRA -->
 
-  <script src="app.js"></script>
+<section id="feira" class="tela">
+
+<div class="card">
+
+<h2>Durante a feira</h2>
+
+<div class="resumo">
+
+<div>Total itens: <strong id="totalItens">0</strong></div>
+
+<div>Total compra: <strong id="valorTotal">R$ 0,00</strong></div>
+
+</div>
+
+<button onclick="salvarUltimaFeira()" class="btn">Salvar como última feira</button>
+
+</div>
+
+<ul id="listaFeira"></ul>
+
+</section>
+
+<!-- TELA COMPARAÇÃO -->
+
+<section id="comparacao" class="tela">
+
+<div class="card">
+
+<h2>Comparação de preços</h2>
+
+<div id="comparacaoLista"></div>
+
+</div>
+
+</section>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
