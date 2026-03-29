@@ -1,14 +1,13 @@
-/* ===============================
-   RESET BÁSICO
-   Ajusta o comportamento padrão
-================================= */
+/* ==============================
+   RESET
+============================== */
 * {
   box-sizing: border-box;
 }
 
-/* ===============================
-   CORPO DO APP
-================================= */
+/* ==============================
+   BODY
+============================== */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -16,19 +15,19 @@ body {
   color: #1f2937;
 }
 
-/* ===============================
-   CONTAINER PRINCIPAL
-================================= */
+/* ==============================
+   APP
+============================== */
 .app {
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   min-height: 100vh;
   padding: 16px;
 }
 
-/* ===============================
-   CABEÇALHO
-================================= */
+/* ==============================
+   TOPO
+============================== */
 .topo {
   background: linear-gradient(135deg, #2f6fed, #5c8cff);
   color: white;
@@ -47,21 +46,55 @@ body {
   opacity: 0.95;
 }
 
-/* ===============================
-   PAINEL SUPERIOR
-================================= */
+/* ==============================
+   FORMULÁRIO
+============================== */
+.formulario {
+  margin-top: 16px;
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.formulario h2 {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.grupo-form,
+.linha-form {
+  margin-bottom: 12px;
+}
+
+.linha-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+/* ==============================
+   PAINEL / RESUMO
+============================== */
 .painel {
   margin-top: 16px;
 }
 
-/* Cards do resumo */
 .resumo {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
-/* Card individual */
 .card-resumo {
   background: white;
   border-radius: 16px;
@@ -78,16 +111,17 @@ body {
 }
 
 .card-resumo strong {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
-/* ===============================
+/* ==============================
    BOTÕES
-================================= */
+============================== */
 .acoes {
   display: flex;
   gap: 10px;
   margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -111,11 +145,26 @@ body {
   color: #111827;
 }
 
-/* ===============================
-   LISTA DE COMPRAS
-================================= */
-.lista-container {
+.btn-perigo {
+  background: #dc2626;
+  color: white;
+}
+
+/* ==============================
+   LISTA
+============================== */
+.lista-container,
+.historico-container {
   margin-top: 16px;
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.lista-container h2,
+.historico-container h2 {
+  margin-top: 0;
 }
 
 .lista-compras {
@@ -124,24 +173,31 @@ body {
   margin: 0;
 }
 
-/* Card de cada item */
+/* Card do item */
 .item {
-  background: white;
+  background: #f9fafb;
   border-radius: 16px;
   padding: 14px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
 }
 
-/* Label clicável do item */
-.label-item {
+/* Linha principal do item */
+.item-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Área da esquerda */
+.item-esquerda {
   display: flex;
   align-items: center;
   gap: 12px;
-  cursor: pointer;
+  flex: 1;
 }
 
-/* Checkbox */
 .checkbox-item {
   width: 22px;
   height: 22px;
@@ -149,28 +205,72 @@ body {
   flex-shrink: 0;
 }
 
-/* Área do texto do item */
 .texto-item {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-/* Nome do item */
 .nome-item {
   font-size: 1.05rem;
   font-weight: bold;
 }
 
-/* Quantidade do item */
 .qtd-item {
   font-size: 0.92rem;
   color: #6b7280;
 }
 
-/* Estilo visual do item comprado */
+/* Ações do item */
+.item-acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-excluir {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #ef4444;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Área de preço do item */
+.item-detalhes {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.item-detalhes input {
+  padding: 12px;
+}
+
+.subtotal-box {
+  background: #eef2ff;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subtotal-box span {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.subtotal-box strong {
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+/* Item comprado */
 .item.comprado {
-  opacity: 0.75;
+  opacity: 0.8;
   border-left: 6px solid #10b981;
 }
 
@@ -179,19 +279,62 @@ body {
   text-decoration: line-through;
 }
 
-/* ===============================
+/* ==============================
+   HISTÓRICO
+============================== */
+.texto-ajuda {
+  color: #6b7280;
+  margin-top: 0;
+}
+
+.historico-precos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.historico-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.historico-item strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* ==============================
    RESPONSIVIDADE
-================================= */
-@media (max-width: 520px) {
+============================== */
+@media (max-width: 700px) {
   .resumo {
     grid-template-columns: 1fr;
   }
 
-  .acoes {
-    flex-direction: column;
+  .linha-form {
+    grid-template-columns: 1fr;
   }
 
-  .topo h1 {
-    font-size: 1.5rem;
+  .item-detalhes {
+    grid-template-columns: 1fr;
+  }
+
+  .item-topo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-acoes {
+    width: 100%;
+  }
+
+  .btn-excluir {
+    width: 100%;
+  }
+
+  .acoes {
+    flex-direction: column;
   }
 }
