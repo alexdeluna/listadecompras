@@ -1,5 +1,5 @@
-const STORAGE_LISTA="feira_lista_v2"
-const STORAGE_ULTIMA="feira_ultima_v2"
+const STORAGE_LISTA="feira_lista_v3"
+const STORAGE_ULTIMA="feira_ultima_v3"
 
 let lista=JSON.parse(localStorage.getItem(STORAGE_LISTA))||[]
 let ultima=JSON.parse(localStorage.getItem(STORAGE_ULTIMA))||[]
@@ -9,7 +9,7 @@ localStorage.setItem(STORAGE_LISTA,JSON.stringify(lista))
 }
 
 function formatar(v){
-return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
+return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})
 }
 
 function mostrarTela(id){
@@ -32,14 +32,30 @@ let qtd=Number(document.getElementById("qtdItem").value)
 
 if(!nome||!qtd)return alert("Preencha os campos")
 
-lista.push({id:Date.now(),nome,qtd,preco:0})
+lista.push({
+
+id:Date.now(),
+nome,
+qtd,
+preco:0,
+comprado:false
+
+})
+
+salvarLista()
+
+renderizar()
+
+}
+
+function salvarListaManual(){
 
 salvarLista()
 
 document.getElementById("nomeItem").value=""
 document.getElementById("qtdItem").value=""
 
-renderizar()
+alert("Lista salva")
 
 }
 
@@ -69,21 +85,42 @@ renderizar()
 
 }
 
+function marcarComprado(id){
+
+lista=lista.map(i=>{
+
+if(i.id==id)i.comprado=!i.comprado
+
+return i
+
+})
+
+salvarLista()
+
+renderizar()
+
+}
+
 function subtotal(i){
+
 return i.qtd*i.preco
+
 }
 
 function renderizar(){
 
-renderCadastro()
+renderLista()
 renderFeira()
+renderComprados()
 renderComparacao()
 
 }
 
-function renderCadastro(){
+function renderLista(){
 
 let el=document.getElementById("listaCadastro")
+if(!el)return
+
 el.innerHTML=""
 
 lista.forEach(i=>{
@@ -92,10 +129,15 @@ let li=document.createElement("li")
 li.className="item"
 
 li.innerHTML=`
+
 <strong>${i.nome}</strong><br>
+
 ${i.qtd} unidades
+
 <br>
+
 <button onclick="removerItem(${i.id})">Excluir</button>
+
 `
 
 el.appendChild(li)
@@ -107,11 +149,59 @@ el.appendChild(li)
 function renderFeira(){
 
 let el=document.getElementById("listaFeira")
+if(!el)return
+
+el.innerHTML=""
+
+lista.filter(i=>!i.comprado).forEach(i=>{
+
+let sub=subtotal(i)
+
+let li=document.createElement("li")
+li.className="item"
+
+li.innerHTML=`
+
+<input type="checkbox"
+onclick="marcarComprado(${i.id})">
+
+<strong>${i.nome}</strong><br>
+
+${i.qtd} unidades
+
+<div class="preco">
+
+<input type="number"
+placeholder="Preço"
+value="${i.preco}"
+onchange="atualizarPreco(${i.id},this.value)">
+
+<div class="subtotal">
+
+${formatar(sub)}
+
+</div>
+
+</div>
+
+`
+
+el.appendChild(li)
+
+})
+
+}
+
+function renderComprados(){
+
+let el=document.getElementById("listaComprados")
+if(!el)return
+
 el.innerHTML=""
 
 let total=0
 
-lista.forEach(i=>{
+lista.filter(i=>i.comprado).forEach(i=>{
 
 let sub=subtotal(i)
 
@@ -122,27 +212,23 @@ li.className="item"
 
 li.innerHTML=`
 
-<strong>${i.nome}</strong><br>
-${i.qtd} unidades
+✔ <strong>${i.nome}</strong><br>
 
-<div class="preco">
+${i.qtd} unidades<br>
 
-<input type="number"
-placeholder="Preço"
-value="${i.preco}"
-onchange="atualizarPreco(${i.id},this.value)">
+Preço: ${formatar(i.preco)}<br>
 
-<div class="subtotal">${formatar(sub)}</div>
+Subtotal: ${formatar(sub)}
 
-</div>
 `
 
 el.appendChild(li)
 
 })
 
-document.getElementById("totalItens").innerText=lista.length
-document.getElementById("valorTotal").innerText=formatar(total)
+let totalEl=document.getElementById("totalComprados")
+
+if(totalEl)totalEl.innerText=formatar(total)
 
 }
 
@@ -154,7 +240,7 @@ ultima=JSON.parse(JSON.stringify(lista))
 
 localStorage.setItem(STORAGE_ULTIMA,JSON.stringify(ultima))
 
-alert("Última feira salva!")
+alert("Feira salva")
 
 }
 
@@ -162,7 +248,14 @@ function restaurarUltimaLista(){
 
 if(!ultima.length)return alert("Nenhuma feira salva")
 
-lista=ultima.map(i=>({...i,preco:0,id:Date.now()+Math.random()}))
+lista=ultima.map(i=>({
+
+...i,
+preco:0,
+comprado:false,
+id:Date.now()+Math.random()
+
+}))
 
 salvarLista()
 
@@ -173,6 +266,9 @@ renderizar()
 function renderComparacao(){
 
 let el=document.getElementById("comparacaoLista")
+
+if(!el)return
+
 el.innerHTML=""
 
 if(!ultima.length)return el.innerHTML="Sem feira anterior"
@@ -184,22 +280,30 @@ let base=ultima.find(x=>x.nome.toLowerCase()==i.nome.toLowerCase())
 if(!base)return
 
 let dif=i.preco-base.preco
+
 let perc=base.preco?((dif/base.preco)*100):0
 
 let classe=""
-
 let status=""
 
 if(dif>0){
+
 classe="maisCaro"
 status="⬆ Mais caro"
+
 }
+
 else if(dif<0){
+
 classe="maisBarato"
 status="⬇ Mais barato"
+
 }
+
 else{
+
 status="➖ Igual"
+
 }
 
 let div=document.createElement("div")
@@ -207,11 +311,11 @@ div.className="comparacaoItem"
 
 div.innerHTML=`
 
-<strong>${i.nome}</strong>
+<strong>${i.nome}</strong><br>
 
-Preço anterior: ${formatar(base.preco)}<br>
+Antes: ${formatar(base.preco)}<br>
 
-Preço atual: ${formatar(i.preco)}<br>
+Agora: ${formatar(i.preco)}<br>
 
 Diferença: ${formatar(dif)} (${perc.toFixed(1)}%)
 
@@ -228,5 +332,7 @@ el.appendChild(div)
 renderizar()
 
 if("serviceWorker" in navigator){
+
 navigator.serviceWorker.register("sw.js")
+
 }
