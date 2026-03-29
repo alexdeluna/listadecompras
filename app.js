@@ -51,6 +51,7 @@ const btnAdicionar = document.getElementById("btn-adicionar");
 const btnMarcarTodos = document.getElementById("btn-marcar-todos");
 const btnDesmarcarTodos = document.getElementById("btn-desmarcar-todos");
 const btnLimparLista = document.getElementById("btn-limpar-lista");
+const btnLimparHistorico = document.getElementById("btn-limpar-historico");
 
 // =========================================
 // CARREGAR LISTA
@@ -444,6 +445,7 @@ btnAdicionar.addEventListener("click", adicionarItem);
 btnMarcarTodos.addEventListener("click", marcarTodos);
 btnDesmarcarTodos.addEventListener("click", desmarcarTodos);
 btnLimparLista.addEventListener("click", limparLista);
+btnLimparHistorico.addEventListener("click", limparHistorico);
 
 // Permite adicionar apertando Enter no formulário
 [inputNome, inputQuantidade, inputUnidade, inputPreco].forEach((campo) => {
@@ -467,6 +469,22 @@ if ("serviceWorker" in navigator) {
         console.log("Erro ao registrar Service Worker:", erro);
       });
   });
+}
+
+// =========================================
+// LIMPAR HISTÓRICO DE PREÇOS
+// Apaga todo o histórico salvo no localStorage.
+// =========================================
+function limparHistorico() {
+  const confirmar = confirm("Tem certeza que deseja apagar todo o histórico de preços?");
+
+  if (!confirmar) return;
+
+  historicoPrecos = ();
+  salvarHistorico();
+  renderizarHistorico();
+
+  alert("Histórico apagado com sucesso.");
 }
 
 // =========================================
