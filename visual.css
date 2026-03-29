@@ -1,0 +1,197 @@
+/* ===============================
+   RESET BÁSICO
+   Ajusta o comportamento padrão
+================================= */
+* {
+  box-sizing: border-box;
+}
+
+/* ===============================
+   CORPO DO APP
+================================= */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6fb;
+  color: #1f2937;
+}
+
+/* ===============================
+   CONTAINER PRINCIPAL
+================================= */
+.app {
+  max-width: 700px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+/* ===============================
+   CABEÇALHO
+================================= */
+.topo {
+  background: linear-gradient(135deg, #2f6fed, #5c8cff);
+  color: white;
+  padding: 22px 18px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(47, 111, 237, 0.22);
+}
+
+.topo h1 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+}
+
+.topo p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* ===============================
+   PAINEL SUPERIOR
+================================= */
+.painel {
+  margin-top: 16px;
+}
+
+/* Cards do resumo */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Card individual */
+.card-resumo {
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.card-resumo span {
+  display: block;
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.card-resumo strong {
+  font-size: 1.4rem;
+}
+
+/* ===============================
+   BOTÕES
+================================= */
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn {
+  flex: 1;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #2f6fed;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-secundario {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* ===============================
+   LISTA DE COMPRAS
+================================= */
+.lista-container {
+  margin-top: 16px;
+}
+
+.lista-compras {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Card de cada item */
+.item {
+  background: white;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* Label clicável do item */
+.label-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+/* Checkbox */
+.checkbox-item {
+  width: 22px;
+  height: 22px;
+  accent-color: #2f6fed;
+  flex-shrink: 0;
+}
+
+/* Área do texto do item */
+.texto-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Nome do item */
+.nome-item {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+/* Quantidade do item */
+.qtd-item {
+  font-size: 0.92rem;
+  color: #6b7280;
+}
+
+/* Estilo visual do item comprado */
+.item.comprado {
+  opacity: 0.75;
+  border-left: 6px solid #10b981;
+}
+
+.item.comprado .nome-item,
+.item.comprado .qtd-item {
+  text-decoration: line-through;
+}
+
+/* ===============================
+   RESPONSIVIDADE
+================================= */
+@media (max-width: 520px) {
+  .resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .acoes {
+    flex-direction: column;
+  }
+
+  .topo h1 {
+    font-size: 1.5rem;
+  }
+}
