@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Faz o layout se adaptar bem ao celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Cor do tema do navegador no celular -->
+  <meta name="theme-color" content="#2f6fed" />
+
+  <title>Lista de Compras PWA</title>
+
+  <!-- Arquivo de estilos -->
+  <link rel="stylesheet" href="visual.css" />
+
+  <!-- Manifesto do PWA -->
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+
+  <!-- Estrutura principal do aplicativo -->
+  <div class="app">
+
+    <!-- Cabeçalho do app -->
+    <header class="topo">
+      <h1>🛒 Lista de Compras</h1>
+      <p>Marque os itens já comprados.</p>
+    </header>
+
+    <!-- Área principal -->
+    <main>
+
+      <!-- Painel de resumo -->
+      <section class="painel">
+        <div class="resumo">
+
+          <!-- Card com total de itens -->
+          <div class="card-resumo">
+            <span>Total</span>
+            <strong id="total-itens">0</strong>
+          </div>
+
+          <!-- Card com total de itens comprados -->
+          <div class="card-resumo">
+            <span>Comprados</span>
+            <strong id="itens-comprados">0</strong>
+          </div>
+
+          <!-- Card com total de itens que ainda faltam -->
+          <div class="card-resumo">
+            <span>Faltando</span>
+            <strong id="itens-faltando">0</strong>
+          </div>
+        </div>
+
+        <!-- Área dos botões de ação -->
+        <div class="acoes">
+          <button id="btn-marcar-todos" class="btn">Marcar todos</button>
+          <button id="btn-desmarcar-todos" class="btn btn-secundario">Limpar checks</button>
+        </div>
+      </section>
+
+      <!-- Área onde a lista será montada pelo JavaScript -->
+      <section class="lista-container">
+        <ul id="lista-compras" class="lista-compras"></ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Arquivo JavaScript principal -->
+  <script src="app.js"></script>
+</body>
+</html>
