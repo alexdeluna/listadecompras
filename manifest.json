@@ -1,6 +1,6 @@
 {
-  "name": "Lista de Compras PWA",
-  "short_name": "Compras",
+  "name": "Lista de Compras PWA V2",
+  "short_name": "Compras V2",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f6fb",
