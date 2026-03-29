@@ -1,98 +1,153 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="UTF-8" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Ajuste para celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Feira Fácil</title>
+  <!-- Cor do tema -->
+  <meta name="theme-color" content="#2f6fed" />
 
-<link rel="stylesheet" href="visual.css">
-<link rel="manifest" href="manifest.json">
+  <title>Feira Fácil</title>
 
-<meta name="theme-color" content="#2f6fed">
-
+  <link rel="stylesheet" href="visual.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
 
-<div class="app">
+  <div class="app">
 
-<header class="topo">
-<h1>🛒 Feira Fácil</h1>
-<p>Controle sua feira e compare preços.</p>
-</header>
+    <!-- TOPO -->
+    <header class="topo">
+      <h1>🛒 Feira Fácil</h1>
+      <p>Monte sua lista, faça sua feira e acompanhe os preços.</p>
+    </header>
 
-<nav class="menu">
+    <!-- MENU DE TELAS -->
+    <nav class="menu">
+      <button class="aba ativa" onclick="mostrarTela('lista', this)">Lista</button>
+      <button class="aba" onclick="mostrarTela('feira', this)">Feira</button>
+      <button class="aba" onclick="mostrarTela('comprados', this)">Itens comprados</button>
+      <button class="aba" onclick="mostrarTela('comparacao', this)">Comparação</button>
+    </nav>
 
-<button onclick="mostrarTela('lista')" class="aba ativa">Lista</button>
-<button onclick="mostrarTela('feira')" class="aba">Feira</button>
-<button onclick="mostrarTela('comparacao')" class="aba">Comparação</button>
+    <!-- ===================================== -->
+    <!-- TELA LISTA -->
+    <!-- ===================================== -->
+    <section id="lista" class="tela ativa">
 
-</nav>
+      <div class="card">
+        <h2>Adicionar item</h2>
 
-<!-- TELA LISTA -->
+        <input
+          id="nomeItem"
+          type="text"
+          placeholder="Nome do item"
+        />
 
-<section id="lista" class="tela ativa">
+        <input
+          id="qtdItem"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="Quantidade"
+        />
 
-<div class="card">
+        <div class="botoes-coluna">
+          <button onclick="adicionarItem()" class="btn">Adicionar item</button>
+          <button onclick="salvarListaManual()" class="btn btn-sec">Salvar lista</button>
+          <button onclick="restaurarUltimaLista()" class="btn btn-sec">Restaurar última lista</button>
+          <button onclick="apagarListaAtual()" class="btn btn-perigo">Apagar lista atual</button>
+        </div>
+      </div>
 
-<h2>Adicionar item</h2>
+      <div class="card">
+        <h2>Itens da lista</h2>
+        <ul id="listaCadastro" class="lista"></ul>
+      </div>
 
-<input id="nomeItem" placeholder="Nome do item">
+    </section>
 
-<input id="qtdItem" type="number" placeholder="Quantidade">
+    <!-- ===================================== -->
+    <!-- TELA FEIRA -->
+    <!-- ===================================== -->
+    <section id="feira" class="tela">
 
-<button onclick="adicionarItem()" class="btn">Adicionar</button>
+      <div class="card">
+        <h2>Durante a feira</h2>
+        <p class="texto-ajuda">
+          Aqui ficam apenas os itens que ainda não foram comprados.
+        </p>
 
-<button onclick="restaurarUltimaLista()" class="btn-sec">Restaurar última lista</button>
+        <div class="resumo">
+          <div class="resumo-box">
+            <span>Itens pendentes</span>
+            <strong id="totalPendentes">0</strong>
+          </div>
 
-</div>
+          <div class="resumo-box">
+            <span>Itens comprados</span>
+            <strong id="totalCompradosResumo">0</strong>
+          </div>
+        </div>
 
-<ul id="listaCadastro"></ul>
+        <button onclick="salvarUltimaFeira()" class="btn">
+          Salvar como última feira
+        </button>
+      </div>
 
-</section>
+      <div class="card">
+        <h2>Itens para comprar</h2>
+        <ul id="listaFeira" class="lista"></ul>
+      </div>
 
-<!-- TELA FEIRA -->
+    </section>
 
-<section id="feira" class="tela">
+    <!-- ===================================== -->
+    <!-- TELA ITENS COMPRADOS -->
+    <!-- ===================================== -->
+    <section id="comprados" class="tela">
 
-<div class="card">
+      <div class="card">
+        <h2>Itens comprados</h2>
+        <p class="texto-ajuda">
+          Aqui ficam apenas os itens já validados no checklist.
+        </p>
 
-<h2>Durante a feira</h2>
+        <div class="resumo">
+          <div class="resumo-box destaque-total">
+            <span>Total atual da compra</span>
+            <strong id="totalComprados">R$ 0,00</strong>
+          </div>
+        </div>
+      </div>
 
-<div class="resumo">
+      <div class="card">
+        <h2>Lista de comprados</h2>
+        <ul id="listaComprados" class="lista"></ul>
+      </div>
 
-<div>Total itens: <strong id="totalItens">0</strong></div>
+    </section>
 
-<div>Total compra: <strong id="valorTotal">R$ 0,00</strong></div>
+    <!-- ===================================== -->
+    <!-- TELA COMPARAÇÃO -->
+    <!-- ===================================== -->
+    <section id="comparacao" class="tela">
 
-</div>
+      <div class="card">
+        <h2>Comparação com a última feira</h2>
+        <p class="texto-ajuda">
+          Veja quais itens ficaram mais caros, mais baratos ou mantiveram o mesmo valor.
+        </p>
 
-<button onclick="salvarUltimaFeira()" class="btn">Salvar como última feira</button>
+        <div id="comparacaoLista"></div>
+      </div>
 
-</div>
+    </section>
 
-<ul id="listaFeira"></ul>
+  </div>
 
-</section>
-
-<!-- TELA COMPARAÇÃO -->
-
-<section id="comparacao" class="tela">
-
-<div class="card">
-
-<h2>Comparação de preços</h2>
-
-<div id="comparacaoLista"></div>
-
-</div>
-
-</section>
-
-</div>
-
-<script src="app.js"></script>
-
+  <script src="app.js"></script>
 </body>
 </html>
