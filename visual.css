@@ -1,365 +1,123 @@
-/* ==============================
-   RESET
-============================== */
-* {
-  box-sizing: border-box;
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6fb;
 }
 
-/* ==============================
-   BODY
-============================== */
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6fb;
-  color: #1f2937;
+.app{
+max-width:800px;
+margin:auto;
+padding:15px;
 }
 
-/* ==============================
-   APP
-============================== */
-.app {
-  max-width: 900px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding: 16px;
+.topo{
+background:#2f6fed;
+color:white;
+padding:20px;
+border-radius:12px;
 }
 
-/* ==============================
-   TOPO
-============================== */
-.topo {
-  background: linear-gradient(135deg, #2f6fed, #5c8cff);
-  color: white;
-  padding: 22px 18px;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(47, 111, 237, 0.22);
+.menu{
+display:flex;
+gap:10px;
+margin-top:10px;
 }
 
-.topo h1 {
-  margin: 0 0 8px;
-  font-size: 1.8rem;
+.aba{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+background:white;
+cursor:pointer;
 }
 
-.topo p {
-  margin: 0;
-  opacity: 0.95;
+.aba.ativa{
+background:#2f6fed;
+color:white;
 }
 
-/* ==============================
-   FORMULÁRIO
-============================== */
-.formulario {
-  margin-top: 16px;
-  background: white;
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+.tela{
+display:none;
+margin-top:15px;
 }
 
-.formulario h2 {
-  margin-top: 0;
-  margin-bottom: 14px;
+.tela.ativa{
+display:block;
 }
 
-.grupo-form,
-.linha-form {
-  margin-bottom: 12px;
+.card{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:15px;
 }
 
-.linha-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
+border:1px solid #ddd;
 }
 
-input {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 1rem;
-  background: #fff;
+.btn{
+background:#2f6fed;
+color:white;
+padding:12px;
+border:none;
+border-radius:10px;
+width:100%;
+margin-bottom:8px;
 }
 
-/* ==============================
-   PAINEL / RESUMO
-============================== */
-.painel {
-  margin-top: 16px;
+.btn-sec{
+background:#ddd;
+padding:12px;
+border:none;
+border-radius:10px;
+width:100%;
 }
 
-.resumo {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+ul{
+list-style:none;
+padding:0;
 }
 
-.card-resumo {
-  background: white;
-  border-radius: 16px;
-  padding: 14px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  text-align: center;
+.item{
+background:white;
+padding:12px;
+margin-bottom:10px;
+border-radius:10px;
 }
 
-.card-resumo span {
-  display: block;
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin-bottom: 6px;
+.preco{
+display:flex;
+gap:10px;
+margin-top:8px;
 }
 
-.card-resumo strong {
-  font-size: 1.3rem;
+.subtotal{
+font-weight:bold;
 }
 
-/* ==============================
-   BOTÕES
-============================== */
-.acoes {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
+.resumo{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
 }
 
-.btn {
-  flex: 1;
-  border: none;
-  border-radius: 14px;
-  padding: 14px 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  background: #2f6fed;
-  color: white;
-  cursor: pointer;
+.comparacaoItem{
+background:white;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
 }
 
-.btn:active {
-  transform: scale(0.98);
+.maisCaro{
+color:red;
 }
 
-.btn-secundario {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.btn-perigo {
-  background: #dc2626;
-  color: white;
-}
-
-/* ==============================
-   LISTA
-============================== */
-.lista-container,
-.historico-container {
-  margin-top: 16px;
-  background: white;
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-.lista-container h2,
-.historico-container h2 {
-  margin-top: 0;
-}
-
-.lista-compras {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Card do item */
-.item {
-  background: #f9fafb;
-  border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 12px;
-  border: 1px solid #e5e7eb;
-}
-
-/* Linha principal do item */
-.item-topo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-/* Área da esquerda */
-.item-esquerda {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
-.checkbox-item {
-  width: 22px;
-  height: 22px;
-  accent-color: #2f6fed;
-  flex-shrink: 0;
-}
-
-.texto-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.nome-item {
-  font-size: 1.05rem;
-  font-weight: bold;
-}
-
-.qtd-item {
-  font-size: 0.92rem;
-  color: #6b7280;
-}
-
-/* Ações do item */
-.item-acoes {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-excluir {
-  border: none;
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: #ef4444;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Área de preço do item */
-.item-detalhes {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-}
-
-.item-detalhes input {
-  padding: 12px;
-}
-
-.subtotal-box {
-  background: #eef2ff;
-  border-radius: 12px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.subtotal-box span {
-  font-size: 0.85rem;
-  color: #6b7280;
-}
-
-.subtotal-box strong {
-  font-size: 1rem;
-  margin-top: 4px;
-}
-
-/* Item comprado */
-.item.comprado {
-  opacity: 0.8;
-  border-left: 6px solid #10b981;
-}
-
-.item.comprado .nome-item,
-.item.comprado .qtd-item {
-  text-decoration: line-through;
-}
-
-/* ==============================
-   HISTÓRICO
-============================== */
-.texto-ajuda {
-  color: #6b7280;
-  margin-top: 0;
-}
-
-.historico-precos {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.historico-item {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.historico-item strong {
-  display: block;
-  margin-bottom: 6px;
-}
-
-/* ==============================
-   RESPONSIVIDADE
-============================== */
-@media (max-width: 700px) {
-  .resumo {
-    grid-template-columns: 1fr;
-  }
-
-  .linha-form {
-    grid-template-columns: 1fr;
-  }
-
-  .item-detalhes {
-    grid-template-columns: 1fr;
-  }
-
-  .item-topo {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .item-acoes {
-    width: 100%;
-  }
-
-  .btn-excluir {
-    width: 100%;
-  }
-
-  .acoes {
-    flex-direction: column;
-  }
-}
-
-/* ==============================
-   TOPO DO HISTÓRICO
-============================== */
-.historico-topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.historico-topo h2 {
-  margin: 0 0 6px 0;
-}
-
-@media (max-width: 700px) {
-  .historico-topo {
-    flex-direction: column;
-  }
-
-  .historico-topo .btn {
-    width: 100%;
-  }
+.maisBarato{
+color:green;
 }
