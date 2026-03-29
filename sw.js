@@ -1,13 +1,12 @@
 // =========================================
 // NOME DO CACHE
-// Sempre que você alterar bastante o app,
-// pode trocar a versão para forçar atualização.
+// Troque a versão quando alterar bastante o app.
 // =========================================
-const CACHE_NAME = "lista-compras-pwa-v1";
+const CACHE_NAME = "lista-compras-pwa-v2";
 
 // =========================================
-// ARQUIVOS QUE O APP VAI GUARDAR EM CACHE
-// Isso ajuda no funcionamento offline.
+// ARQUIVOS PRINCIPAIS DO APP
+// Esses arquivos ficam disponíveis offline.
 // =========================================
 const ARQUIVOS_CACHE = [
   "./",
@@ -20,8 +19,7 @@ const ARQUIVOS_CACHE = [
 ];
 
 // =========================================
-// INSTALAÇÃO DO SERVICE WORKER
-// Guarda os arquivos principais no cache.
+// INSTALAÇÃO
 // =========================================
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -34,14 +32,14 @@ self.addEventListener("install", (event) => {
 });
 
 // =========================================
-// ATIVAÇÃO DO SERVICE WORKER
+// ATIVAÇÃO
 // Remove caches antigos.
 // =========================================
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((listaDeCaches) => {
+    caches.keys().then((listaCaches) => {
       return Promise.all(
-        listaDeCaches
+        listaCaches
           .filter((cacheAntigo) => cacheAntigo !== CACHE_NAME)
           .map((cacheAntigo) => caches.delete(cacheAntigo))
       );
@@ -52,9 +50,8 @@ self.addEventListener("activate", (event) => {
 });
 
 // =========================================
-// INTERCEPTAÇÃO DAS REQUISIÇÕES
-// Estratégia: tenta buscar no cache primeiro.
-// Se não encontrar, busca na internet.
+// FETCH
+// Busca no cache primeiro, depois na rede.
 // =========================================
 self.addEventListener("fetch", (event) => {
   event.respondWith(
