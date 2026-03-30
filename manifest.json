@@ -1,8 +1,0 @@
-{
-"name":"Feira Fácil",
-"short_name":"Feira",
-"start_url":"./index.html",
-"display":"standalone",
-"background_color":"#f4f6fb",
-"theme_color":"#2f6fed"
-}
