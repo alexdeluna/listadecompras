@@ -136,14 +136,9 @@ el.orcamentoRestante.textContent = formatarMoeda(restante)
 
 	function formatarPrecoDigitado(valor) {
 
-  // remove tudo que não for número
   const numeros = valor.replace(/\D/g, "")
 
-  if (!numeros) {
-    return "0,00"
-  }
-
-  const inteiro = parseInt(numeros, 10)
+  const inteiro = parseInt(numeros || "0", 10)
 
   const numero = inteiro / 100
 
@@ -728,17 +723,15 @@ el.itemQuantidade.addEventListener("keydown", (event) => {
 // EVENTOS DA TELA FEIRA
 // ==========================================================
 
-// Eventos da tela feira
 el.feiraItens.addEventListener("input", (event) => {
 
-  const input = event.target.closest("[data-acao='input-preco']");
-  if (!input) return;
+  const input = event.target.closest("[data-acao='input-preco']")
+  if (!input) return
 
   const valorFormatado = formatarPrecoDigitado(input.value)
 
   input.value = valorFormatado
 
-  // converte para número real
   const valorNumerico = parseFloat(
     valorFormatado
       .replace(/\./g, "")
@@ -749,7 +742,35 @@ el.feiraItens.addEventListener("input", (event) => {
 
 })
 
+el.feiraItens.addEventListener("keydown", (event) => {
 
+  const input = event.target.closest("[data-acao='input-preco']")
+  if (!input) return
+
+  if (event.key === "Backspace") {
+
+    event.preventDefault()
+
+    let numeros = input.value.replace(/\D/g, "")
+
+    numeros = numeros.slice(0, -1)
+
+    const novoValor = formatarPrecoDigitado(numeros)
+
+    input.value = novoValor
+
+    const valorNumerico = parseFloat(
+      novoValor
+        .replace(/\./g, "")
+        .replace(",", ".")
+    )
+
+    atualizarPrecoItem(input.dataset.id, valorNumerico)
+
+  }
+
+})
+	
 // ENTER no campo preço = validar compra + ir para próximo item
 el.feiraItens.addEventListener("keydown", (event) => {
 
