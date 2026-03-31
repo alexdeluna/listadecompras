@@ -96,13 +96,16 @@ orcamentoTotal: document.getElementById("orcamento-total"),
 orcamentoRestante: document.getElementById("orcamento-restante"),
 
   btnFinalizarFeira: document.getElementById("btn-finalizar-feira"),
-  btnNovaFeira: document.getElementById("btn-nova-feira")
-};
+  btnNovaFeira: document.getElementById("btn-nova-feira"),
 
 modal: document.getElementById("modal-confirmacao"),
 modalTexto: document.getElementById("modal-texto"),
 modalCancelar: document.getElementById("modal-cancelar"),
 modalConfirmar: document.getElementById("modal-confirmar"),
+	
+};
+
+
 
 // ==========================================================
 // UTILITÁRIOS
