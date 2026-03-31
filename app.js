@@ -136,9 +136,16 @@ el.orcamentoRestante.textContent = formatarMoeda(restante)
 
 	function formatarPrecoDigitado(valor) {
 
+  // remove tudo que não for número
   const numeros = valor.replace(/\D/g, "")
 
-  const numero = Number(numeros) / 100
+  if (!numeros) {
+    return "0,00"
+  }
+
+  const inteiro = parseInt(numeros, 10)
+
+  const numero = inteiro / 100
 
   return numero.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
@@ -146,7 +153,6 @@ el.orcamentoRestante.textContent = formatarMoeda(restante)
   })
 
 }
-
 
 // ======================
 // CALCULO DE PERCENTUAL
@@ -732,15 +738,16 @@ el.feiraItens.addEventListener("input", (event) => {
 
   input.value = valorFormatado
 
-  const valorNumerico = Number(
+  // converte para número real
+  const valorNumerico = parseFloat(
     valorFormatado
-      .replace(".", "")
+      .replace(/\./g, "")
       .replace(",", ".")
   )
 
   atualizarPrecoItem(input.dataset.id, valorNumerico)
 
-});
+})
 
 
 // ENTER no campo preço = validar compra + ir para próximo item
@@ -754,9 +761,9 @@ el.feiraItens.addEventListener("keydown", (event) => {
     event.preventDefault();
 
     const id = input.dataset.id;
-    const valor = Number(
+    const valor = parseFloat(
   input.value
-    .replace(".", "")
+    .replace(/\./g, "")
     .replace(",", ".")
 )
 
