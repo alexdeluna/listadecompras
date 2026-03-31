@@ -1,201 +1,343 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-  <title>Feira Fácil</title>
 
-  <meta name="theme-color" content="#2e7d32" />
-  <meta name="description" content="Controle sua feira de forma rápida e simples." />
+<meta charset="UTF-8">
 
-  <link rel="manifest" href="./manifest.json" />
-  <link rel="stylesheet" href="./visual.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>Feira Fácil</title>
+
+<meta name="theme-color" content="#2e7d32">
+
+<meta name="description" content="Controle sua feira de forma rápida e simples.">
+
+<link rel="manifest" href="./manifest.json">
+
+<link rel="stylesheet" href="./visual.css">
+
 </head>
+
 <body>
-  <div class="app-shell">
-    <header class="app-header">
-      <div>
-        <h1>Feira Fácil</h1>
-        <p class="subtitle">Sua lista de compras, simples e rápida.</p>
-      </div>
 
-      <div class="header-actions">
-        <button id="btn-login-google" class="btn secondary">Entrar com Google</button>
-        <button id="btn-login-anon" class="btn secondary">Entrar anônimo</button>
-        <button id="btn-logout" class="btn danger hidden">Sair</button>
-      </div>
-    </header>
+<div class="app-shell">
 
-    <section class="user-bar">
-      <span id="user-status">Não autenticado</span>
-      <span id="connection-status">Modo online</span>
-    </section>
+<header class="app-header">
 
-    <nav class="bottom-nav">
-      <button class="nav-btn active" data-screen="lista-screen">Lista</button>
-      <button class="nav-btn" data-screen="feira-screen">Feira</button>
-      <button class="nav-btn" data-screen="comprados-screen">Comprados</button>
-      <button class="nav-btn" data-screen="comparacao-screen">Comparação</button>
-    </nav>
+<div>
 
-    <main class="main-content">
-      <!-- TELA 1: - LISTA -->
-      <section id="lista-screen" class="screen active">
-        <div class="montar-lista-header">
+<h1>Feira Fácil</h1>
 
-  <h2>Montar Lista</h2>
-
-  <div class="orcamento-inline">
-    <label for="input-orcamento">Inserir orçamento</label>
-    <input
-      id="input-orcamento"
-      type="number"
-      step="0.01"
-      min="0"
-      placeholder="Ex: 300"
-    />
-  </div>
-
-            <div class="field">
-              <label for="item-quantidade">Quantidade</label>
-              <input
-                id="item-quantidade"
-                type="number"
-                min="1"
-                step="1"
-                value="1"
-              />
-            </div>
-          </div>
-
-          <div class="actions-row">
-            <button id="btn-adicionar-item" class="btn primary">Adicionar item</button>
-            <button id="btn-salvar-lista" class="btn success">Salvar lista</button>
-            <button id="btn-restaurar-lista" class="btn secondary">Restaurar última lista</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header-line">
-            <h3>Itens da Lista</h3>
-            <span id="contador-itens-lista" class="badge">0 itens</span>
-          </div>
-
-			<div class="card budget-card">
-  <h3>Orçamento da Feira</h3>
-
-  <div class="field">
-   <div class="card budget-card">
-  <h3>Orçamento da Feira</h3>
-
-  <div class="field">
-    <label for="input-orcamento">Valor disponível</label>
-    <input
-      id="input-orcamento"
-      type="number"
-      step="0.01"
-      min="0"
-      placeholder="Ex: 300"
-    />
-  </div>
-</div>
-          <div id="lista-itens-preview" class="items-list empty-state">
-            Nenhum item adicionado ainda.
-          </div>
-        </div>
-      </section>
-
-      <!-- TELA 2: FEIRA -->
-      <section id="feira-screen" class="screen">
-        <div class="card">
-          <div class="card-header-line">
-            <h2>Feira</h2>
-			  <div class="budget-info feira-budget">
-  <div class="budget-line">
-    ORÇAMENTO
-    <strong id="orcamento-definido">R$ 0,00</strong>
-  </div>
-
-  <div class="budget-line">
-    USADO
-    <strong id="orcamento-total">R$ 0,00</strong>
-  </div>
-
-  <div class="budget-line">
-    RESTANTE
-    <strong id="orcamento-restante">R$ 0,00</strong>
-  </div>
-
-  <div class="budget-percent">
-    GASTO: <span id="orcamento-percentual">0%</span>
-  </div>
-
-  <div class="progress-bar">
-    <div id="progress-bar-fill"></div>
-  </div>
+<p class="subtitle">Sua lista de compras, simples e rápida.</p>
 
 </div>
-            <span id="contador-itens-feira" class="badge">0 pendentes</span>
-          </div>
-          <p class="helper-text">
-            Digite o preço e toque em <strong>Comprado</strong> para mover o item para a tela de comprados.
-          </p>
-        </div>
 
-        <div id="feira-itens" class="items-list empty-state">
-          Nenhum item pendente.
-        </div>
-      </section>
+<div class="header-actions">
 
-      <!-- TELA 3: ITENS COMPRADOS -->
-      <section id="comprados-screen" class="screen">
-        <div class="card total-card">
-          <h2>Total Atual da Compra</h2>
-          <div id="total-compra" class="total-value">R$ 0,00</div>
-        </div>
+<button id="btn-login-google" class="btn secondary">Entrar com Google</button>
 
-        <div class="card">
-          <div class="card-header-line">
-            <h3>Itens Comprados</h3>
-            <span id="contador-itens-comprados" class="badge">0 comprados</span>
-          </div>
+<button id="btn-login-anon" class="btn secondary">Entrar anônimo</button>
 
-          <div id="comprados-itens" class="items-list empty-state">
-            Nenhum item comprado ainda.
-          </div>
-        </div>
+<button id="btn-logout" class="btn danger hidden">Sair</button>
 
-        <div class="actions-row">
-          <button id="btn-finalizar-feira" class="btn success">Salvar feira atual</button>
-        </div>
-      </section>
+</div>
 
-      <!-- TELA 4: COMPARAÇÃO -->
-      <section id="comparacao-screen" class="screen">
-        <div class="card">
-          <h2>Comparação com a Última Feira</h2>
-          <p class="helper-text">
-            Aqui você vê a diferença entre os preços atuais e os preços da feira anterior.
-          </p>
-        </div>
+</header>
 
-        <div id="comparacao-itens" class="items-list empty-state">
-          Ainda não há dados suficientes para comparar.
-        </div>
-		
-		 <div class="actions-row">
-			<button id="btn-nova-feira" class="btn primary">
-				Nova feira
-			</button>
-		</div>
-		
-      </section>
-    </main>
-  </div>
 
-  <script type="module" src="./app.js"></script>
+
+<section class="user-bar">
+
+<span id="user-status">Não autenticado</span>
+
+<span id="connection-status">Modo online</span>
+
+</section>
+
+
+
+<nav class="bottom-nav">
+
+<button class="nav-btn active" data-screen="lista-screen">Lista</button>
+
+<button class="nav-btn" data-screen="feira-screen">Feira</button>
+
+<button class="nav-btn" data-screen="comprados-screen">Comprados</button>
+
+<button class="nav-btn" data-screen="comparacao-screen">Comparação</button>
+
+</nav>
+
+
+
+<main class="main-content">
+
+<!-- TELA LISTA -->
+
+<section id="lista-screen" class="screen active">
+
+
+
+<div class="card">
+
+<div class="montar-lista-header">
+
+<h2>Montar Lista</h2>
+
+<div class="orcamento-inline">
+
+<label for="input-orcamento">Inserir orçamento</label>
+
+<input id="input-orcamento" type="number" step="0.01" min="0" placeholder="Ex: 300">
+
+</div>
+
+</div>
+
+
+
+<div class="form-grid">
+
+<div class="field">
+
+<label for="item-nome">Nome do item</label>
+
+<input id="item-nome" type="text" placeholder="Ex: Café" autocomplete="off">
+
+</div>
+
+
+
+<div class="field">
+
+<label for="item-quantidade">Quantidade</label>
+
+<input id="item-quantidade" type="number" min="1" step="1" value="1">
+
+</div>
+
+</div>
+
+
+
+<div class="actions-row">
+
+<button id="btn-adicionar-item" class="btn primary">Adicionar item</button>
+
+<button id="btn-salvar-lista" class="btn success">Salvar lista</button>
+
+<button id="btn-restaurar-lista" class="btn secondary">Restaurar última lista</button>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-header-line">
+
+<h3>Itens da Lista</h3>
+
+<span id="contador-itens-lista" class="badge">0 itens</span>
+
+</div>
+
+
+
+<div id="lista-itens-preview" class="items-list empty-state">
+
+Nenhum item adicionado ainda.
+
+</div>
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- TELA FEIRA -->
+
+<section id="feira-screen" class="screen">
+
+<div class="card">
+
+<div class="card-header-line">
+
+<h2>Feira</h2>
+
+
+
+<div class="budget-info feira-budget">
+
+<div class="budget-line">
+
+ORÇAMENTO
+
+<strong id="orcamento-definido">R$ 0,00</strong>
+
+</div>
+
+
+
+<div class="budget-line">
+
+USADO
+
+<strong id="orcamento-total">R$ 0,00</strong>
+
+</div>
+
+
+
+<div class="budget-line">
+
+RESTANTE
+
+<strong id="orcamento-restante">R$ 0,00</strong>
+
+</div>
+
+
+
+<div class="budget-percent">
+
+GASTO: <span id="orcamento-percentual">0%</span>
+
+</div>
+
+
+
+<div class="progress-bar">
+
+<div id="progress-bar-fill"></div>
+
+</div>
+
+</div>
+
+
+
+<span id="contador-itens-feira" class="badge">0 pendentes</span>
+
+</div>
+
+
+
+<p class="helper-text">
+
+Digite o preço e toque em <strong>Comprado</strong> para mover o item para a tela de comprados.
+
+</p>
+
+</div>
+
+
+
+<div id="feira-itens" class="items-list empty-state">
+
+Nenhum item pendente.
+
+</div>
+
+</section>
+
+
+
+<!-- TELA COMPRADOS -->
+
+<section id="comprados-screen" class="screen">
+
+<div class="card total-card">
+
+<h2>Total Atual da Compra</h2>
+
+<div id="total-compra" class="total-value">R$ 0,00</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="card-header-line">
+
+<h3>Itens Comprados</h3>
+
+<span id="contador-itens-comprados" class="badge">0 comprados</span>
+
+</div>
+
+
+
+<div id="comprados-itens" class="items-list empty-state">
+
+Nenhum item comprado ainda.
+
+</div>
+
+</div>
+
+
+
+<div class="actions-row">
+
+<button id="btn-finalizar-feira" class="btn success">Salvar feira atual</button>
+
+</div>
+
+</section>
+
+
+
+<!-- TELA COMPARAÇÃO -->
+
+<section id="comparacao-screen" class="screen">
+
+<div class="card">
+
+<h2>Comparação com a Última Feira</h2>
+
+<p class="helper-text">
+
+Aqui você vê a diferença entre os preços atuais e os preços da feira anterior.
+
+</p>
+
+</div>
+
+
+
+<div id="comparacao-itens" class="items-list empty-state">
+
+Ainda não há dados suficientes para comparar.
+
+</div>
+
+
+
+<div class="actions-row">
+
+<button id="btn-nova-feira" class="btn primary">Nova feira</button>
+
+</div>
+
+</section>
+
+
+
+</main>
+
+</div>
+
+
+
+<script type="module" src="./app.js"></script>
+
 </body>
+
 </html>
