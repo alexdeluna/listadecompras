@@ -430,7 +430,7 @@ function marcarComoComprado(id) {
   const item = state.feiraAtual.find((i) => i.id === id);
   if (!item) return;
 
-  if (item.preco === "" || Number(item.preco) < 0) {
+  if (!item.preco || Number(item.preco) <= 0) {
     alert("Digite um preço válido antes de marcar como comprado.");
     return;
   }
@@ -728,23 +728,27 @@ el.feiraItens.addEventListener("input", (event) => {
   const input = event.target.closest("[data-acao='input-preco']")
   if (!input) return
 
-  const valorFormatado = formatarPrecoDigitado(input.value)
+  // pega apenas números
+  let numeros = input.value.replace(/\D/g, "")
+
+  if (numeros === "") numeros = "0"
+
+  const valor = parseInt(numeros, 10) / 100
+
+  const valorFormatado = valor.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
 
   input.value = valorFormatado
 
-	// mantém o cursor sempre no final (evita bug em mobile)
-setTimeout(() => {
-  const len = input.value.length
-  input.setSelectionRange(len, len)
-}, 0)
+  // cursor no final
+  setTimeout(() => {
+    const len = input.value.length
+    input.setSelectionRange(len, len)
+  }, 0)
 
-  const valorNumerico = parseFloat(
-    valorFormatado
-      .replace(/\./g, "")
-      .replace(",", ".")
-  )
-
-  atualizarPrecoItem(input.dataset.id, valorNumerico)
+  atualizarPrecoItem(input.dataset.id, valor)
 
 })
 
