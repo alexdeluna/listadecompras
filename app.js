@@ -683,6 +683,11 @@ el.itemNome.addEventListener("keydown", (event) => {
 
 })
 
+	// Quando campo quantidade receber foco, selecionar automaticamente
+el.itemQuantidade.addEventListener("focus", () => {
+  el.itemQuantidade.select()
+})
+
 
 // ENTER no campo quantidade adiciona item
 el.itemQuantidade.addEventListener("keydown", (event) => {
