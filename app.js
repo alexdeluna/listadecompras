@@ -838,6 +838,11 @@ el.feiraItens.addEventListener("click", (event) => {
 
   if (!input.value) input.value = "0,00"
 
+  // seleciona todo o conteúdo para digitação imediata
+  setTimeout(() => {
+    input.select()
+  }, 0)
+
 })
 
   // Finalizar feira
