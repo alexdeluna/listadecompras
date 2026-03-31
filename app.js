@@ -134,6 +134,19 @@ elOrcamentoDefinido.textContent = formatarMoeda(orcamento)
 el.orcamentoTotal.textContent = formatarMoeda(total)
 el.orcamentoRestante.textContent = formatarMoeda(restante)
 
+	function formatarPrecoDigitado(valor) {
+
+  const numeros = valor.replace(/\D/g, "")
+
+  const numero = Number(numeros) / 100
+
+  return numero.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+
+}
+
 
 // ======================
 // CALCULO DE PERCENTUAL
@@ -709,13 +722,23 @@ el.itemQuantidade.addEventListener("keydown", (event) => {
 // EVENTOS DA TELA FEIRA
 // ==========================================================
 
-// Atualiza preço enquanto o usuário digita
+// Eventos da tela feira
 el.feiraItens.addEventListener("input", (event) => {
 
   const input = event.target.closest("[data-acao='input-preco']");
   if (!input) return;
 
-  atualizarPrecoItem(input.dataset.id, input.value);
+  const valorFormatado = formatarPrecoDigitado(input.value)
+
+  input.value = valorFormatado
+
+  const valorNumerico = Number(
+    valorFormatado
+      .replace(".", "")
+      .replace(",", ".")
+  )
+
+  atualizarPrecoItem(input.dataset.id, valorNumerico)
 
 });
 
@@ -731,7 +754,11 @@ el.feiraItens.addEventListener("keydown", (event) => {
     event.preventDefault();
 
     const id = input.dataset.id;
-    const valor = Number(input.value);
+    const valor = Number(
+  input.value
+    .replace(".", "")
+    .replace(",", ".")
+)
 
     // Impede preço vazio ou zero
     if (!valor || valor <= 0) {
