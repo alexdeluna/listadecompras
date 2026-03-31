@@ -99,6 +99,11 @@ orcamentoRestante: document.getElementById("orcamento-restante"),
   btnNovaFeira: document.getElementById("btn-nova-feira")
 };
 
+modal: document.getElementById("modal-confirmacao"),
+modalTexto: document.getElementById("modal-texto"),
+modalCancelar: document.getElementById("modal-cancelar"),
+modalConfirmar: document.getElementById("modal-confirmar"),
+
 // ==========================================================
 // UTILITÁRIOS
 // ==========================================================
@@ -477,15 +482,49 @@ function editarItemDaFeira(id) {
   renderizarTudo();
 }
 
+function mostrarConfirmacao(mensagem, callback){
+
+  el.modalTexto.textContent = mensagem
+
+  el.modal.classList.remove("hidden")
+
+  el.modalCancelar.onclick = () => {
+    el.modal.classList.add("hidden")
+  }
+
+  el.modalConfirmar.onclick = () => {
+
+    el.modal.classList.add("hidden")
+
+    callback()
+
+  }
+
+}
+
 // ==========================================================
 // EXCLUI ITEM DA FEIRA
 // Remove tanto da feira quanto da lista de comprados,
 // caso ele já esteja comprado.
 // ==========================================================
-function excluirItemDaFeira(id) {
-  state.feiraAtual = state.feiraAtual.filter((item) => item.id !== id);
-  state.itensComprados = state.itensComprados.filter((item) => item.id !== id);
-  renderizarTudo();
+function excluirItemDaFeira(id){
+
+  const item = state.feiraAtual.find(i => i.id === id)
+
+  if(!item) return
+
+  mostrarConfirmacao(
+    `Deseja realmente excluir "${item.nome}" da feira?`,
+    () => {
+
+      state.feiraAtual = state.feiraAtual.filter(i => i.id !== id)
+      state.itensComprados = state.itensComprados.filter(i => i.id !== id)
+
+      renderizarTudo()
+
+    }
+  )
+
 }
 
 // ==========================================================
