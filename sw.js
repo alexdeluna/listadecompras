@@ -1,12 +1,14 @@
 // ==========================================================
-// SERVICE WORKER
-// Faz cache básico dos arquivos estáticos para permitir
-// carregamento mais rápido e funcionamento offline parcial.
+// SERVICE WORKER PROFISSIONAL - FEIRA FÁCIL
+// Atualização automática + cache inteligente
 // ==========================================================
 
-const CACHE_NAME = "feira-facil-v1";
+const VERSION = "feira-facil-v3";
 
-const ASSETS_TO_CACHE = [
+const STATIC_CACHE = VERSION + "-static";
+const DYNAMIC_CACHE = VERSION + "-dynamic";
+
+const STATIC_ASSETS = [
   "./",
   "./index.html",
   "./visual.css",
@@ -17,35 +19,108 @@ const ASSETS_TO_CACHE = [
   "./manifest.json"
 ];
 
-// Instalação do service worker
+
+// ==========================================================
+// INSTALAÇÃO
+// ==========================================================
+
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
-  );
+
   self.skipWaiting();
+
+  event.waitUntil(
+
+    caches.open(STATIC_CACHE)
+      .then(cache => cache.addAll(STATIC_ASSETS))
+
+  );
+
 });
 
-// Ativação e limpeza de caches antigos
+
+// ==========================================================
+// ATIVAÇÃO
+// Remove caches antigos automaticamente
+// ==========================================================
+
 self.addEventListener("activate", (event) => {
+
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
+
+    caches.keys().then(keys => {
+
+      return Promise.all(
+
+        keys.map(key => {
+
+          if(
+            key !== STATIC_CACHE &&
+            key !== DYNAMIC_CACHE
+          ){
             return caches.delete(key);
           }
-        })
-      )
-    )
-  );
-  self.clients.claim();
-});
 
-// Estratégia cache first para arquivos estáticos
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
+        })
+
+      )
+
     })
-  );
-});
+
+  )
+
+  self.clients.claim()
+
+})
+
+
+// ==========================================================
+// FETCH
+// Estratégia: NETWORK FIRST
+// ==========================================================
+
+self.addEventListener("fetch", (event) => {
+
+  const request = event.request
+
+  // NÃO cachear Firebase ou APIs
+  if(
+    request.url.includes("firestore") ||
+    request.url.includes("googleapis") ||
+    request.url.includes("firebase")
+  ){
+    return
+  }
+
+  event.respondWith(
+
+    fetch(request)
+
+      .then(response => {
+
+        const clone = response.clone()
+
+        caches.open(DYNAMIC_CACHE)
+          .then(cache => cache.put(request, clone))
+
+        return response
+
+      })
+
+      .catch(() => caches.match(request))
+
+  )
+
+})
+
+
+// ==========================================================
+// DETECTAR NOVA VERSÃO
+// ==========================================================
+
+self.addEventListener("message", (event) => {
+
+  if(event.data === "skipWaiting"){
+    self.skipWaiting()
+  }
+
+})
