@@ -422,3 +422,10 @@ border-radius:6px;
 border:1px solid #ccc;
 
 }
+
+.orcamento-info{
+  font-size: 15px;
+  color: #666;
+  margin-top: 6px;
+  font-weight: 500;
+}
