@@ -54,7 +54,7 @@ const state = {
   itensComprados: [],
 
   // Resultado da comparação com última feira
-  comparacao: []
+  comparacao: [],
 	orcamento: 0
 };
 
