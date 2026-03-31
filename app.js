@@ -735,17 +735,52 @@ function init() {
     renderizarTudo();
   });
 
-  // Registro do service worker
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", async () => {
-      try {
-        await navigator.serviceWorker.register("./sw.js");
-        console.log("Service Worker registrado com sucesso.");
-      } catch (error) {
-        console.error("Erro ao registrar Service Worker:", error);
-      }
-    });
-  }
+// ==========================================================
+// REGISTRO DO SERVICE WORKER + DETECÇÃO DE NOVA VERSÃO
+// ==========================================================
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", async () => {
+
+    try {
+
+      const registration = await navigator.serviceWorker.register("./sw.js")
+
+      console.log("Service Worker registrado com sucesso.")
+
+
+      // Detecta nova versão instalada
+      registration.addEventListener("updatefound", () => {
+
+        const newWorker = registration.installing
+
+        newWorker.addEventListener("statechange", () => {
+
+          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+
+            console.log("Nova versão do Feira Fácil disponível.")
+
+            alert("Nova versão do Feira Fácil disponível. O app será atualizado.")
+
+            window.location.reload()
+
+          }
+
+        })
+
+      })
+
+
+    } catch (error) {
+
+      console.error("Erro ao registrar Service Worker:", error)
+
+    }
+
+  })
+
+}
 }
 
 init();
