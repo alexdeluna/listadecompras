@@ -116,6 +116,16 @@ function calcularTotalCompra() {
   }, 0);
 }
 
+function atualizarOrcamentoVisual() {
+	const total = calcularTotalCompra();
+	const orcamento = Number(state.orcamento || 0);
+	const restante = orcamento - total;
+
+	el.orcamentoTotal.textContent = formatarMoeda(total);
+	el.orcamentoRestante.textContent = formatarMoeda(restante);
+
+}
+
 function limparSessaoFeira() {
   state.feiraAtual = [];
   state.itensComprados = [];
@@ -165,6 +175,8 @@ function renderizarTudo() {
   renderizarComparacao(el.comparacaoItens, state.comparacao);
 
   atualizarResumoVisual();
+
+atualizarOrcamentoVisual();		
 }
 
 // ==========================================================
@@ -635,6 +647,14 @@ function registrarEventos() {
   
   // Nova feira
 	el.btnNovaFeira.addEventListener("click", iniciarNovaFeira);
+
+	el.inputOrcamento.addEventListener("input", (event) => {
+
+  state.orcamento = Number(event.target.value || 0);
+
+  atualizarOrcamentoVisual();
+
+});
 
   // Conectividade
   window.addEventListener("online", atualizarStatusConexao);
