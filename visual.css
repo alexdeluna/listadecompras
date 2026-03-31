@@ -385,3 +385,40 @@ background:#2e7d32;
 transition:0.3s;
 
 }
+
+/* ===================================
+HEADER MONTAR LISTA + ORÇAMENTO
+=================================== */
+
+.montar-lista-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+
+}
+
+.orcamento-inline{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+}
+
+.orcamento-inline label{
+
+font-size:14px;
+font-weight:600;
+
+}
+
+.orcamento-inline input{
+
+width:110px;
+padding:6px 8px;
+border-radius:6px;
+border:1px solid #ccc;
+
+}
