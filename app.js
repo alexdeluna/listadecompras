@@ -110,20 +110,6 @@ function normalizarTexto(texto) {
   return String(texto || "").trim();
 }
 
-function formatarPrecoDigitado(valor) {
-
-  const numeros = valor.replace(/\D/g, "")
-
-  const inteiro = parseInt(numeros || "0", 10)
-
-  const numero = inteiro / 100
-
-  return numero.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
-
-}
 
 function calcularTotalCompra() {
   return state.itensComprados.reduce((acc, item) => {
@@ -723,116 +709,112 @@ el.itemQuantidade.addEventListener("keydown", (event) => {
 // EVENTOS DA TELA FEIRA
 // ==========================================================
 
+// ==========================================================
+// EVENTOS DA TELA FEIRA (VERSÃO SIMPLES E ESTÁVEL)
+// ==========================================================
+
+// Atualiza preço enquanto o usuário digita
 el.feiraItens.addEventListener("input", (event) => {
 
   const input = event.target.closest("[data-acao='input-preco']")
   if (!input) return
 
-  // pega apenas números
-  let numeros = input.value.replace(/\D/g, "")
-
-  if (numeros === "") numeros = "0"
-
-  const valor = parseInt(numeros, 10) / 100
-
-  const valorFormatado = valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
-
-  input.value = valorFormatado
-
-  // cursor no final
-  setTimeout(() => {
-    const len = input.value.length
-    input.setSelectionRange(len, len)
-  }, 0)
+  const valor = parseFloat(
+    input.value
+      .replace(/\./g, "")
+      .replace(",", ".")
+  )
 
   atualizarPrecoItem(input.dataset.id, valor)
 
 })
 
+// Validação de teclas no campo preço
 el.feiraItens.addEventListener("keydown", (event) => {
 
   const input = event.target.closest("[data-acao='input-preco']")
   if (!input) return
 
-  if (event.key === "Backspace") {
+  const tecla = event.key
 
+  // permite números
+  if (/[0-9]/.test(tecla)) return
+
+  // permite vírgula
+  if (tecla === ",") return
+
+  // permite ponto (será convertido)
+  if (tecla === ".") {
     event.preventDefault()
-
-    let numeros = input.value.replace(/\D/g, "")
-
-    numeros = numeros.slice(0, -1)
-
-    const novoValor = formatarPrecoDigitado(numeros)
-
-    input.value = novoValor
-	  setTimeout(() => {
-  const len = input.value.length
-  input.setSelectionRange(len, len)
-}, 0)
-
-    const valorNumerico = parseFloat(
-      novoValor
-        .replace(/\./g, "")
-        .replace(",", ".")
-    )
-
-    atualizarPrecoItem(input.dataset.id, valorNumerico)
-
+    input.value += ","
+    return
   }
 
+  // teclas de controle
+  if (
+    tecla === "Backspace" ||
+    tecla === "Delete" ||
+    tecla === "ArrowLeft" ||
+    tecla === "ArrowRight" ||
+    tecla === "Tab" ||
+    tecla === "Enter"
+  ) {
+    return
+  }
+
+  // bloqueia qualquer outra tecla
+  event.preventDefault()
+
 })
+
 	
 // ENTER no campo preço = validar compra + ir para próximo item
 el.feiraItens.addEventListener("keydown", (event) => {
 
-  const input = event.target.closest("[data-acao='input-preco']");
-  if (!input) return;
+  const input = event.target.closest("[data-acao='input-preco']")
+  if (!input) return
 
   if (event.key === "Enter") {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const id = input.dataset.id;
+    const id = input.dataset.id
+
     const valor = parseFloat(
-  input.value
-    .replace(/\./g, "")
-    .replace(",", ".")
-)
+      input.value
+        .replace(/\./g, "")
+        .replace(",", ".")
+    )
 
-    // Impede preço vazio ou zero
     if (!valor || valor <= 0) {
 
-      alert("Digite um preço válido antes de marcar como comprado.");
-      input.focus();
-      return;
+      alert("Digite um preço válido antes de marcar como comprado.")
+      input.focus()
+      return
 
     }
 
-    atualizarPrecoItem(id, valor);
+    atualizarPrecoItem(id, valor)
 
-    marcarComoComprado(id);
+    marcarComoComprado(id)
 
-    // Após renderizar, foca no próximo campo de preço
+    // foco no próximo item
     setTimeout(() => {
 
-      const proximoInput = el.feiraItens.querySelector("[data-acao='input-preco']");
+      const proximoInput = el.feiraItens.querySelector("[data-acao='input-preco']")
 
       if (proximoInput) {
 
-        proximoInput.focus();
-        proximoInput.select();
+        proximoInput.focus()
+        proximoInput.select()
 
       }
 
-    }, 50);
+    }, 50)
 
   }
 
-});
-
+})
 
 // Botões da tela feira
 el.feiraItens.addEventListener("click", (event) => {
