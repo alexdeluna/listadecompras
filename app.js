@@ -110,6 +110,21 @@ function normalizarTexto(texto) {
   return String(texto || "").trim();
 }
 
+function formatarPrecoDigitado(valor) {
+
+  const numeros = valor.replace(/\D/g, "")
+
+  const inteiro = parseInt(numeros || "0", 10)
+
+  const numero = inteiro / 100
+
+  return numero.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })
+
+}
+
 function calcularTotalCompra() {
   return state.itensComprados.reduce((acc, item) => {
     return acc + Number(item.quantidade) * Number(item.preco || 0);
@@ -133,21 +148,6 @@ elOrcamentoDefinido.textContent = formatarMoeda(orcamento)
 
 el.orcamentoTotal.textContent = formatarMoeda(total)
 el.orcamentoRestante.textContent = formatarMoeda(restante)
-
-	function formatarPrecoDigitado(valor) {
-
-  const numeros = valor.replace(/\D/g, "")
-
-  const inteiro = parseInt(numeros || "0", 10)
-
-  const numero = inteiro / 100
-
-  return numero.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
-
-}
 
 // ======================
 // CALCULO DE PERCENTUAL
