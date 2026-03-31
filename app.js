@@ -264,7 +264,8 @@ function adicionarItemNaLista() {
 
   if (quantidade <= 0) {
     alert("A quantidade deve ser maior que zero.");
-    el.itemQuantidade.focus();
+    el.itemQuantidade.focus()
+	el.itemQuantidade.select()
     return;
   }
 
@@ -660,20 +661,41 @@ function registrarEventos() {
   el.btnSalvarLista.addEventListener("click", salvarLista);
   el.btnRestaurarLista.addEventListener("click", restaurarUltimaLista);
 
-  // Enter no campo nome adiciona item
-  el.itemNome.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      adicionarItemNaLista();
-    }
-  });
+ // ==========================================================
+// ENTER INTELIGENTE PARA MONTAGEM DA LISTA
+// Fluxo:
+// Nome -> ENTER -> Quantidade
+// Quantidade -> ENTER -> Adicionar item
+// Após adicionar -> campos limpos e cursor volta para Nome
+// ==========================================================
 
-  el.itemQuantidade.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      adicionarItemNaLista();
-    }
-  });
+// ENTER no campo nome move para quantidade
+el.itemNome.addEventListener("keydown", (event) => {
+
+  if (event.key === "Enter") {
+
+    event.preventDefault()
+
+    el.itemQuantidade.focus()
+	el.itemQuantidade.select()
+
+  }
+
+})
+
+
+// ENTER no campo quantidade adiciona item
+el.itemQuantidade.addEventListener("keydown", (event) => {
+
+  if (event.key === "Enter") {
+
+    event.preventDefault()
+
+    adicionarItemNaLista()
+
+  }
+
+})
 
   // Remoção de item da prévia da lista
   el.listaItensPreview.addEventListener("click", (event) => {
