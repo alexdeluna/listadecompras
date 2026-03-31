@@ -849,6 +849,18 @@ el.feiraItens.addEventListener("click", (event) => {
 
 });
 
+	el.feiraItens.addEventListener("keypress", (event) => {
+
+  const input = event.target.closest("[data-acao='input-preco']")
+  if (!input) return
+
+  // permite apenas números
+  if (!/[0-9]/.test(event.key)) {
+    event.preventDefault()
+  }
+
+})
+
   // Conectividade
   window.addEventListener("online", atualizarStatusConexao);
   window.addEventListener("offline", atualizarStatusConexao);
