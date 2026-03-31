@@ -705,25 +705,80 @@ el.itemQuantidade.addEventListener("keydown", (event) => {
     removerItemDaLista(botao.dataset.id);
   });
 
-  // Eventos da tela feira
-  el.feiraItens.addEventListener("input", (event) => {
-    const input = event.target.closest("[data-acao='input-preco']");
-    if (!input) return;
+ // ==========================================================
+// EVENTOS DA TELA FEIRA
+// ==========================================================
 
-    atualizarPrecoItem(input.dataset.id, input.value);
-  });
+// Atualiza preço enquanto o usuário digita
+el.feiraItens.addEventListener("input", (event) => {
 
-  el.feiraItens.addEventListener("click", (event) => {
-    const botao = event.target.closest("[data-acao]");
-    if (!botao) return;
+  const input = event.target.closest("[data-acao='input-preco']");
+  if (!input) return;
 
-    const { acao, id } = botao.dataset;
+  atualizarPrecoItem(input.dataset.id, input.value);
 
-    if (acao === "comprado") marcarComoComprado(id);
-    if (acao === "caro") marcarComoCaro(id);
-    if (acao === "editar") editarItemDaFeira(id);
-    if (acao === "excluir-feira") excluirItemDaFeira(id);
-  });
+});
+
+
+// ENTER no campo preço = validar compra + ir para próximo item
+el.feiraItens.addEventListener("keydown", (event) => {
+
+  const input = event.target.closest("[data-acao='input-preco']");
+  if (!input) return;
+
+  if (event.key === "Enter") {
+
+    event.preventDefault();
+
+    const id = input.dataset.id;
+    const valor = Number(input.value);
+
+    // Impede preço vazio ou zero
+    if (!valor || valor <= 0) {
+
+      alert("Digite um preço válido antes de marcar como comprado.");
+      input.focus();
+      return;
+
+    }
+
+    atualizarPrecoItem(id, valor);
+
+    marcarComoComprado(id);
+
+    // Após renderizar, foca no próximo campo de preço
+    setTimeout(() => {
+
+      const proximoInput = el.feiraItens.querySelector("[data-acao='input-preco']");
+
+      if (proximoInput) {
+
+        proximoInput.focus();
+        proximoInput.select();
+
+      }
+
+    }, 50);
+
+  }
+
+});
+
+
+// Botões da tela feira
+el.feiraItens.addEventListener("click", (event) => {
+
+  const botao = event.target.closest("[data-acao]");
+  if (!botao) return;
+
+  const { acao, id } = botao.dataset;
+
+  if (acao === "comprado") marcarComoComprado(id);
+  if (acao === "caro") marcarComoCaro(id);
+  if (acao === "editar") editarItemDaFeira(id);
+  if (acao === "excluir-feira") excluirItemDaFeira(id);
+
+});
 
   // Finalizar feira
   el.btnFinalizarFeira.addEventListener("click", finalizarFeiraAtual);
