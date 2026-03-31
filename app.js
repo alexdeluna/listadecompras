@@ -116,20 +116,74 @@ function calcularTotalCompra() {
   }, 0);
 }
 
-function atualizarOrcamentoVisual() {
+function atualizarOrcamentoVisual(){
 
-  const total = calcularTotalCompra();
-  const orcamento = Number(state.orcamento || 0);
-  const restante = orcamento - total;
+const total = calcularTotalCompra()
+const orcamento = Number(state.orcamento || 0)
 
-  const elOrcamentoDefinido = document.getElementById("orcamento-definido");
+const restante = orcamento - total
 
-  if (elOrcamentoDefinido) {
-    elOrcamentoDefinido.textContent = formatarMoeda(orcamento);
-  }
+// valores
+const elOrcamentoDefinido = document.getElementById("orcamento-definido")
+const elPercentual = document.getElementById("orcamento-percentual")
+const progressBar = document.getElementById("progress-bar-fill")
 
-  el.orcamentoTotal.textContent = formatarMoeda(total);
-  el.orcamentoRestante.textContent = formatarMoeda(restante);
+if(elOrcamentoDefinido)
+elOrcamentoDefinido.textContent = formatarMoeda(orcamento)
+
+el.orcamentoTotal.textContent = formatarMoeda(total)
+el.orcamentoRestante.textContent = formatarMoeda(restante)
+
+
+// ======================
+// CALCULO DE PERCENTUAL
+// ======================
+
+let percentual = 0
+
+if(orcamento > 0){
+percentual = (total / orcamento) * 100
+}
+
+percentual = Math.min(percentual, 150)
+
+if(elPercentual)
+elPercentual.textContent = percentual.toFixed(0) + "%"
+
+
+// ======================
+// BARRA DE PROGRESSO
+// ======================
+
+if(progressBar){
+
+progressBar.style.width = percentual + "%"
+
+if(percentual < 80)
+progressBar.style.background = "#2e7d32"
+
+else if(percentual < 100)
+progressBar.style.background = "#f9a825"
+
+else
+progressBar.style.background = "#c62828"
+
+}
+
+
+// ======================
+// ALERTA VISUAL RESTANTE
+// ======================
+
+if(restante < 0){
+
+el.orcamentoRestante.style.color = "red"
+
+}else{
+
+el.orcamentoRestante.style.color = ""
+
+}
 
 }
 
