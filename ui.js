@@ -82,7 +82,8 @@ export function renderizarFeira(container, itensPendentes) {
             <input
               id="${inputId}"
               class="price-input"
-              type="number"
+              type="text"
+              inputmode="decimal"
               min="0"
               step="0.01"
               placeholder="0,00"
