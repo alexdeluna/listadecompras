@@ -117,12 +117,19 @@ function calcularTotalCompra() {
 }
 
 function atualizarOrcamentoVisual() {
-	const total = calcularTotalCompra();
-	const orcamento = Number(state.orcamento || 0);
-	const restante = orcamento - total;
 
-	el.orcamentoTotal.textContent = formatarMoeda(total);
-	el.orcamentoRestante.textContent = formatarMoeda(restante);
+  const total = calcularTotalCompra();
+  const orcamento = Number(state.orcamento || 0);
+  const restante = orcamento - total;
+
+  const elOrcamentoDefinido = document.getElementById("orcamento-definido");
+
+  if (elOrcamentoDefinido) {
+    elOrcamentoDefinido.textContent = formatarMoeda(orcamento);
+  }
+
+  el.orcamentoTotal.textContent = formatarMoeda(total);
+  el.orcamentoRestante.textContent = formatarMoeda(restante);
 
 }
 
