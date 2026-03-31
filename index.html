@@ -44,19 +44,20 @@
     <main class="main-content">
       <!-- TELA 1: LISTA -->
       <section id="lista-screen" class="screen active">
-        <div class="card">
-          <h2>Montar Lista</h2>
+        <div class="montar-lista-header">
 
-          <div class="form-grid">
-            <div class="field">
-              <label for="item-nome">Nome do item</label>
-              <input
-                id="item-nome"
-                type="text"
-                placeholder="Ex: Café"
-                autocomplete="off"
-              />
-            </div>
+  <h2>Montar Lista</h2>
+
+  <div class="orcamento-inline">
+    <label for="input-orcamento">Inserir orçamento</label>
+    <input
+      id="input-orcamento"
+      type="number"
+      step="0.01"
+      min="0"
+      placeholder="Ex: 300"
+    />
+  </div>
 
             <div class="field">
               <label for="item-quantidade">Quantidade</label>
