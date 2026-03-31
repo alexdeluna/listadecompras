@@ -55,6 +55,7 @@ const state = {
 
   // Resultado da comparação com última feira
   comparacao: []
+	orcamento: 0
 };
 
 // ==========================================================
@@ -89,6 +90,10 @@ const el = {
   contadorItensComprados: document.getElementById("contador-itens-comprados"),
 
   totalCompra: document.getElementById("total-compra"),
+
+inputOrcamento: document.getElementById("input-orcamento"),
+orcamentoTotal: document.getElementById("orcamento-total"),
+orcamentoRestante: document.getElementById("orcamento-restante"),
 
   btnFinalizarFeira: document.getElementById("btn-finalizar-feira"),
   btnNovaFeira: document.getElementById("btn-nova-feira")
