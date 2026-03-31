@@ -732,6 +732,12 @@ el.feiraItens.addEventListener("input", (event) => {
 
   input.value = valorFormatado
 
+	// mantém o cursor sempre no final (evita bug em mobile)
+setTimeout(() => {
+  const len = input.value.length
+  input.setSelectionRange(len, len)
+}, 0)
+
   const valorNumerico = parseFloat(
     valorFormatado
       .replace(/\./g, "")
@@ -758,6 +764,10 @@ el.feiraItens.addEventListener("keydown", (event) => {
     const novoValor = formatarPrecoDigitado(numeros)
 
     input.value = novoValor
+	  setTimeout(() => {
+  const len = input.value.length
+  input.setSelectionRange(len, len)
+}, 0)
 
     const valorNumerico = parseFloat(
       novoValor
